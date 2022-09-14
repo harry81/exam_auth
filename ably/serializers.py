@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from ably.models import check_verified
 
 
 class AblyRegisterSerializer(RegisterSerializer):
@@ -7,14 +8,8 @@ class AblyRegisterSerializer(RegisterSerializer):
     phone_number = serializers.CharField()
     phone_verified = serializers.CharField()
 
-    def get_cleaned_data(self):
-        super().get_cleaned_data()
+    def validate(self, data):
+        if not check_verified(data['phone_verified'], action="REGISTRATION"):
+            raise serializers.ValidationError("인증번호가 유효하지 않습니다.")
 
-        return {
-            'username': self.validated_data.get('username', ''),
-            'password1': self.validated_data.get('password1', ''),
-            'password2': self.validated_data.get('password2', ''),
-            'email': self.validated_data.get('email', ''),
-            'first_name': self.validated_data.get('first_name', ''),
-            'last_name': self.validated_data.get('last_name', '')
-        }
+        return data

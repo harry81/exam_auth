@@ -14,7 +14,7 @@ class User(AbstractUser):
     phone_number = models.CharField(verbose_name="전화번호", max_length=15)
 
 
-class Verified(models.Model):
+class Verification(models.Model):
     phone_number = models.CharField(verbose_name="전화번호", max_length=15)
     key = models.CharField(verbose_name="인증번호", max_length=8)
     action = models.CharField(verbose_name="인증종류", max_length=16)
@@ -22,8 +22,13 @@ class Verified(models.Model):
     expired_at = models.DateTimeField(null=True)
 
     def save(self, *args, **kwargs):
+
         if not self.key:
-            self.expired_at = timezone.now() + timedelta(minutes=5)
             self.key = get_random_string(KEY_LENGTH, RANDOM_STRING_CHARS)
 
+        self.expired_at = timezone.now() + timedelta(minutes=1)
         super().save(*args, **kwargs)
+
+
+def check_verified(phone_verified, action="REGISTRATION"):
+    return Verification.objects.filter(key=phone_verified).exists()
