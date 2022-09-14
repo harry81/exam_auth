@@ -12,11 +12,28 @@ $ pip install -r requirements.txt
 ### 로컬 환경에서 실행하기
 ```
 $ python manage.py runserver
-
 ```
 http://localhost:8000/admin/ 에서 저장된 데이타를 확인할 수 있습니다.
+
 <img src="https://hm-public-static.s3.ap-northeast-2.amazonaws.com/images/sc-ably-admin.png" width="700px">
 
+### Endpoints
+```
+$ python manage.py show_urls
+
+/dj-rest-auth/login/    dj_rest_auth.views.LoginView    rest_login
+/dj-rest-auth/logout/   dj_rest_auth.views.LogoutView   rest_logout
+/dj-rest-auth/password/change/  dj_rest_auth.views.PasswordChangeView   rest_password_change
+/dj-rest-auth/password/reset/   dj_rest_auth.views.PasswordResetView    rest_password_reset
+/dj-rest-auth/password/reset/confirm/   dj_rest_auth.views.PasswordResetConfirmView     rest_password_reset_confirm
+/dj-rest-auth/registration/     dj_rest_auth.registration.views.RegisterView    rest_register
+/dj-rest-auth/registration/account-confirm-email/<key>/ django.views.generic.base.TemplateView  account_confirm_email
+/dj-rest-auth/registration/account-email-verification-sent/     django.views.generic.base.TemplateView  account_email_verification_sent
+/dj-rest-auth/registration/resend-email/        dj_rest_auth.registration.views.ResendEmailVerificationView     rest_resend_email
+/dj-rest-auth/registration/reset/       ably.views.ResetPasswordView
+/dj-rest-auth/registration/verify-email/        dj_rest_auth.registration.views.VerifyEmailView rest_verify_email
+/dj-rest-auth/user/     dj_rest_auth.views.UserDetailsView      rest_user_details
+```
 
 ### 로그인
 - 식별가능 대상
@@ -27,6 +44,7 @@ http://localhost:8000/admin/ 에서 저장된 데이타를 확인할 수 있습�
 
 ### CLI 환경에서 기능 테스트
 - 전화번호로 인증번호 요청하기
+
 성공하면 네자리의 인증키를 반환합니다.
 ```
 $ curl -X POST http://localhost:8000/ably/request_verification/ -H 'Content-Type: application/json' -d '{"phone_number": "010-1111-1118"}'
@@ -35,6 +53,7 @@ $ curl -X POST http://localhost:8000/ably/request_verification/ -H 'Content-Type
 ```
 
 - 가입하기(registration)
+
 성공하면 token key 를 반환합니다.
 ```
 $ curl -X POST http://localhost:8000/dj-rest-auth/registration/ -H 'Content-Type: application/json' -d '{"username": "ably8", "password1": "complex_hello", "password2": "complex_hello", "nickname": "공수래공수거5", "phone_number": "010-1111-1118", "email": "user8@a-bly.com", "phone_verified": "2513"}'
