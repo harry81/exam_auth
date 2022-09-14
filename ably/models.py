@@ -32,6 +32,14 @@ class Verification(models.Model):
     def check_verified(self):
         return self.expired_at > timezone.now()
 
+    def extend_expiration(self):
+        self.key = get_random_string(KEY_LENGTH, RANDOM_STRING_CHARS)
+        self.expired_at = timezone.now() + timedelta(minutes=1)
+        self.save()
+
+    def __str__(self):
+        return "%s" % (self.phone_number)
+
 
 def check_verified(phone_verified, action="REGISTRATION"):
     verification = Verification.objects.filter(key=phone_verified).first()

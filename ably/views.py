@@ -40,7 +40,10 @@ class RequestVerificationView(APIView):
     def post(self, request, *args, **kwargs):
         action = request.data.get("action", "REGISTRATION")
         phone_number = request.data.get('phone_number')
-        verification = Verification.objects.create(
+        verification, created = Verification.objects.get_or_create(
             phone_number=phone_number, action=action)
+
+        if not created and not verification.check_verified():
+            verification.extend_expiration()
 
         return Response(verification.key, status=status.HTTP_201_CREATED)
