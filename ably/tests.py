@@ -17,7 +17,7 @@ class AuthTestCase(TestCase):
         self.user = User.objects.create_user(**data)
 
     def test_request_verification(self):
-        data = {"phone_number": "010-1234-7890"}
+        data = {"phone_number": "010-1234-7890", "action": "REGISTRATION"}
         res = self.client.post(path="/ably/request_verification/",
                                data=data, content_type="application/json")
 
@@ -109,3 +109,24 @@ class AuthTestCase(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertIn("nickname", res.json())
         self.assertIn("phone_number", res.json())
+
+    def test_reset_password(self):
+        data = {"phone_number": "010-1234-7890", "action": "RESET"}
+        res = self.client.post(path="/ably/request_verification/",
+                               data=data, content_type="application/json")
+
+        data = {"username": "ably",
+                "password1": "complex_hello2",
+                "password2": "complex_hello2",
+                "phone_number": "010-1234-7890",
+                "phone_verified": res.json()
+                }
+
+        user_cnt = User.objects.count()
+
+        res = self.client.post(path="/dj-rest-auth/registration/reset/",
+                               data=data, content_type="application/json")
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        user = User.objects.filter(username=data["username"]).first()
+        self.assertTrue(user.check_password(data["password1"]))

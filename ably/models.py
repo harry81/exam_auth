@@ -29,6 +29,13 @@ class Verification(models.Model):
         self.expired_at = timezone.now() + timedelta(minutes=1)
         super().save(*args, **kwargs)
 
+    def check_verified(self):
+        return self.expired_at > timezone.now()
+
 
 def check_verified(phone_verified, action="REGISTRATION"):
-    return Verification.objects.filter(key=phone_verified).exists()
+    verification = Verification.objects.filter(key=phone_verified).first()
+
+    if verification:
+        return verification.expired_at > timezone.now()
+    return False
