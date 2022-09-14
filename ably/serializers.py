@@ -1,6 +1,17 @@
-from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from django.contrib.auth import get_user_model
+from rest_framework import serializers
+
 from ably.models import check_verified
+
+User = get_user_model()
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'nickname', 'phone_number']
 
 
 class AblyRegisterSerializer(RegisterSerializer):

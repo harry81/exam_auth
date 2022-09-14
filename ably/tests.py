@@ -14,7 +14,7 @@ class AuthTestCase(TestCase):
                 "phone_number": "010-1234-7890",
                 "email": "user@a-bly.com"}
 
-        User.objects.create_user(**data)
+        self.user = User.objects.create_user(**data)
 
     def test_request_verification(self):
         data = {"phone_number": "010-1234-7890"}
@@ -99,3 +99,13 @@ class AuthTestCase(TestCase):
                                data=data, content_type="application/json")
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertIn("key", res.json())
+
+    def test_login_with_email(self):
+
+        self.client.force_login(self.user)
+
+        res = self.client.get(path="/ably/my/",
+                              content_type="application/json")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn("nickname", res.json())
+        self.assertIn("phone_number", res.json())

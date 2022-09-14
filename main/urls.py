@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from ably.views import RequestVerificationView
+from ably.views import RequestVerificationView, MyGetView
 
 
 urlpatterns = [
@@ -23,5 +23,6 @@ urlpatterns = [
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('ably/request_verification/', RequestVerificationView.as_view()),
+    path('ably/my/', MyGetView.as_view()),
 
 ]
