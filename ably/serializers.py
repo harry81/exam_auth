@@ -16,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class AblyRegisterSerializer(RegisterSerializer):
     nickname = serializers.CharField()
+    email = serializers.CharField()
     phone_number = serializers.CharField()
     phone_verified = serializers.CharField()
 

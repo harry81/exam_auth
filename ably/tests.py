@@ -49,6 +49,7 @@ class AuthTestCase(TestCase):
         user = User.objects.filter(username=data["username"]).first()
         self.assertNotEqual(len(user.phone_number), 0)
         self.assertNotEqual(len(user.nickname), 0)
+        self.assertNotEqual(len(user.email), 0)
         self.assertEqual(User.objects.count(), user_cnt + 1)
         self.assertTrue(User.objects.filter(username=data['username']).exists())
 
@@ -120,7 +121,7 @@ class AuthTestCase(TestCase):
                                data=data, content_type="application/json")
 
         data = {"username": "ably",
-                "password1": "complex_hello2",
+                "password1": "comlex_hello2",
                 "password2": "complex_hello2",
                 "phone_number": "010-1234-7890",
                 "phone_verified": res.json()
