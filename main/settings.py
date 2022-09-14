@@ -114,6 +114,14 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'ably.User'
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
+
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'ably.serializers.AblyRegisterSerializer'
 }
@@ -122,6 +130,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'ably.backends.AblyBackend',
 ]
+
+ACCOUNT_ADAPTER = 'ably.adapters.AblyAccountAdapter'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

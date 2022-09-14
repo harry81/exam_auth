@@ -24,3 +24,10 @@ class AblyRegisterSerializer(RegisterSerializer):
             raise serializers.ValidationError("인증번호가 유효하지 않습니다.")
 
         return data
+
+    def get_cleaned_data(self):
+        data = super().get_cleaned_data()
+        data['phone_number'] = self.validated_data.get('phone_number', '')
+        data['nickname'] = self.validated_data.get('nickname', '')
+
+        return data

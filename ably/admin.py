@@ -7,4 +7,9 @@ class VerificationAdmin(admin.ModelAdmin):
     list_display = ['phone_number', 'key', 'action', 'expired_at']
 
 
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['username', 'nickname', 'phone_number']
+
+
 admin.site.register(User, UserAdmin)

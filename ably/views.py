@@ -11,8 +11,7 @@ User = get_user_model()
 
 class MyGetView(APIView):
     def get(self, request):
-        user = User.objects.first()
-        serializer = UserSerializer(user)
+        serializer = UserSerializer(request.user)
 
         return Response(serializer.data)
 
@@ -35,6 +34,7 @@ class ResetPasswordView(APIView):
             return Response("OK", status=status.HTTP_200_OK)
 
         return Response("Fail", status=status.HTTP_400_BAD_REQUEST)
+
 
 class RequestVerificationView(APIView):
     def post(self, request, *args, **kwargs):

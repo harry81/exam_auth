@@ -45,6 +45,10 @@ class AuthTestCase(TestCase):
                                data=data, content_type="application/json")
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+        user = User.objects.filter(username=data["username"]).first()
+        self.assertNotEqual(len(user.phone_number), 0)
+        self.assertNotEqual(len(user.nickname), 0)
         self.assertEqual(User.objects.count(), user_cnt + 1)
         self.assertTrue(User.objects.filter(username=data['username']).exists())
 
