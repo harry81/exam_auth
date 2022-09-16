@@ -1,0 +1,9 @@
+{
+    "dev": {
+        "django_settings": "main.settings",
+        "profile_name": "aws-hyunmin",
+        "project_name": "ably",
+        "runtime": "python3.9",
+        "s3_bucket": "zappa-6leo64h3r"
+    }
+}

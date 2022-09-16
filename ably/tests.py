@@ -121,7 +121,7 @@ class AuthTestCase(TestCase):
                                data=data, content_type="application/json")
 
         data = {"username": "ably",
-                "password1": "comlex_hello2",
+                "password1": "complex_hello2",
                 "password2": "complex_hello2",
                 "phone_number": "010-1234-7890",
                 "phone_verified": res.json()
