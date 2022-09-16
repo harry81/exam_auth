@@ -21,6 +21,8 @@ http://localhost:8000/admin/ 에서 저장된 데이타를 확인할 수 있습�
 ```
 $ python manage.py show_urls
 
+/ably/my/       ably.views.MyGetView
+/ably/request_verification/     ably.views.RequestVerificationView
 /dj-rest-auth/login/    dj_rest_auth.views.LoginView    rest_login
 /dj-rest-auth/logout/   dj_rest_auth.views.LogoutView   rest_logout
 /dj-rest-auth/password/change/  dj_rest_auth.views.PasswordChangeView   rest_password_change
@@ -91,6 +93,13 @@ $ curl -X POST http://localhost:8000/ably/request_verification/ -H 'Content-Type
 $ curl -X POST http://localhost:8000/dj-rest-auth/registration/reset/ -H 'Content-Type: application/json' -d '{"password1": "complex_hello2", "password2": "complex_hello2","phone_number": "010-1111-1112", "phone_verified": "5891"}'
 "OK"%
 ```
+
+
+### 배포환경
+- url: https://ably.hoodpub.com/admin/
+- user: admin
+- password: 1234qwer
+
 
 ### 소감
  - 퀴즈형 코딩 테스트가 아니어서 흥미롭게 과제를 진행할 수 있었습니다.

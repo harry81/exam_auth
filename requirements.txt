@@ -4,3 +4,5 @@ dj-rest-auth==2.2.5
 djangorestframework==3.13.1
 flake8==5.0.4
 django-allauth==0.51.0
+psycopg2==2.9.3
+django-s3-storage==0.13.9
